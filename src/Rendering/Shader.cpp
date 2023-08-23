@@ -6,6 +6,7 @@
 Shader::Shader(const std::string &source, uint32_t type) {
   TRACE_FUNCTION();
   assert(type != 0 && "Couldn't identify the shader type");
+  this->contents = source;
 
   id = glCreateShader(type);
   const char *vertexShaderSourceStr = source.c_str();

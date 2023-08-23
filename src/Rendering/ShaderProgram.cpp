@@ -6,6 +6,10 @@
 
 ShaderProgram::ShaderProgram(const Ref<const Shader> &vertexShader, const Ref<const Shader> &fragmentShader) {
   TRACE_FUNCTION();
+  if(!fragmentShader->isValid())
+  {
+    std::cout << fragmentShader->contents << std::endl;
+  }
   assert(vertexShader->isValid());
   assert(fragmentShader->isValid());
 

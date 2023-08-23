@@ -116,7 +116,7 @@ void Player::onCursorPositionEvent(double x, double y) {
     lastY = y;
   }
 
-  float yaw = camera.getYaw() + static_cast<float>(-lastX + x) * mouseSensitivity;
+  float yaw = camera.getYaw() - static_cast<float>(-lastX + x) * mouseSensitivity;
   float pitch = glm::clamp(camera.getPitch() + static_cast<float>(lastY - y) * mouseSensitivity, -89.0f, 89.0f);
   camera.updateCameraOrientation(yaw, pitch);
 
