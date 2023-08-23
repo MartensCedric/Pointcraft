@@ -10,7 +10,7 @@ struct MovementDirection {
 class Camera {
   glm::mat4 view = calcView();
   glm::vec3 position = {14, 100, 17};
-  glm::vec3 cameraUp = {0, 1, 0};
+  glm::vec3 cameraUp = {0, -1, 0};
 
   MovementDirection forward = {false, {1, 0, 0}};
   MovementDirection backward = {false, {-1, 0, 0}};
