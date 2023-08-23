@@ -25,7 +25,7 @@ class Player {
   bool canJump = false;
 
   bool isRunning = false;
-  bool isSurvivalMovement = false;
+  bool isSurvivalMovement = true;
   bool shouldResetMouse = true;
 
 public:
