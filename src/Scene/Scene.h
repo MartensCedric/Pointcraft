@@ -11,8 +11,10 @@
 #include "BlockOutline.h"
 #include "Effects/ChromaticAberrationEffect.h"
 #include "Effects/CrosshairEffect.h"
+#include "Effects/FloydSteinbergEffect.h"
 #include "Effects/GammaCorrectionEffect.h"
 #include "Effects/GaussianBlurEffect.h"
+#include "Effects/GrayscaleEffect.h"
 #include "Effects/InvertEffect.h"
 #include "Effects/PostProcessEffect.h"
 #include "Effects/VignetteEffect.h"
@@ -34,7 +36,9 @@ class Scene {
   std::vector<Ref<PostProcessEffect>> postProcessingEffects = {
      std::make_shared<CrosshairEffect>(true),       std::make_shared<ChromaticAberrationEffect>(false),
      std::make_shared<InvertEffect>(false),         std::make_shared<VignetteEffect>(true),
-     std::make_shared<GammaCorrectionEffect>(true), std::make_shared<GaussianBlurEffect>(false)};
+     std::make_shared<GammaCorrectionEffect>(true), std::make_shared<GaussianBlurEffect>(false),
+     std::make_shared<FloydSteinbergEffect>(false), std::make_shared<GrayscaleEffect>(false)
+  };
 
   bool isMenuOpen = false;
   bool showIntermediateTextures = false;
