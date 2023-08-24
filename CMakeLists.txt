@@ -12,8 +12,9 @@ elseif (CMAKE_BUILD_TYPE MATCHES Debug)
     set(CMAKE_CXX_FLAGS "-g")
 endif ()
 
-file(GLOB_RECURSE glCraftSources src/*.cpp src/*.h)
+file(GLOB_RECURSE glCraftSources src/*.cpp)
 add_executable(${PROJECT_NAME} ${glCraftSources})
+message(${glCraftSources})
 target_precompile_headers(${PROJECT_NAME} PRIVATE src/glCraft.h)
 
 # glfw

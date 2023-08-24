@@ -7,10 +7,13 @@
 
 #include "../../Rendering/ColorRenderPass.h"
 #include "PostProcessEffect.h"
+#include "../../Rendering/RenderingUtil.h"
 
 class FloydSteinbergEffect : public PostProcessEffect {
 
   std::vector<uint8_t> pixels;
+  std::vector<uint32_t> grayscale_pixels;
+
 public:
   FloydSteinbergEffect(bool enabled)
       : PostProcessEffect(AssetManager::instance().loadShaderProgram("assets/shaders/floyd_steinberg"),
@@ -39,44 +42,35 @@ public:
     if(pixels.size() != width * height * 4)
       pixels.resize(width * height * 4);
 
+//    if(grayscale_pixels.size() != width * height)
+//      grayscale_pixels.resize(width * height);
+
     if (framebuffer == nullptr || framebuffer->getWidth() != width || framebuffer->getHeight() != height) {
       framebuffer = std::make_shared<Framebuffer>(width, height, false, 1);
     }
 
     Ref<FramebufferStack> framebufferStack = window.getFramebufferStack();
-    Ref<Framebuffer> colorSource = framebufferStack->peek();
+    Ref<Framebuffer> colorSource = framebufferStack->peek();    colorSource->getColorAttachment(0)->bind();
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels.data());
+    colorSource->getColorAttachment(0)->unbind();
     colorSource->bind();
     glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels.data());
 
-    std::ofstream ppm_file("buffer.ppm", std::ios::binary);
-    if (!ppm_file.is_open()) {
-      std::cerr << "Error opening file: " << "buffer.ppm" << std::endl;
-      return;
-    }
-
-    ppm_file << "P3\n" << width << " " << height << "\n255\n";
-
-    for(int i = 0; i < width*height; i++)
-    {
-      uint8_t red = pixels[i * 4];
-      uint8_t green = pixels[i * 4 + 1];
-      uint8_t blue = pixels[i * 4 + 2];
-
-      ppm_file << std::to_string(red) << ' ';
-      ppm_file << std::to_string(green) << ' ';
-      ppm_file << std::to_string(blue) << '\n';
-//      ppm_file << red << ' ';
-//      ppm_file << green << ' ';
-//      ppm_file << blue << '\n';
-    }
-
-    ppm_file.close();
-//    for(int i = 0; i < pixels.size(); i++)
+    //pixels_to_ppm(pixels, width, height, "buffer.ppm");
+//    rgba_to_grayscale(pixels, grayscale_pixels);
+//
+//    for(int i = 0; i < width * height; i++)
 //    {
-//      pixels[i] = 127;
+//      pixels[i*4] = grayscale_pixels[i];
+//      pixels[i*4+1] = grayscale_pixels[i];
+//      pixels[i*4+2] = grayscale_pixels[i];
+//      pixels[i*4+3] = 255;
 //    }
-//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels.data());
-    colorSource->unbind();
+
+    colorSource->getColorAttachment(0)->bind();
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels.data());
+    colorSource->getColorAttachment(0)->unbind();
+
     framebufferStack->push(framebuffer, 1);
 
     update();
