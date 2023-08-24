@@ -18,7 +18,7 @@ public:
 
   virtual void update() = 0;
   virtual void renderGui() = 0;
-  void render();
+  virtual void render();
 
   virtual ~PostProcessEffect() = default;
 };

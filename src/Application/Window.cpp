@@ -110,7 +110,7 @@ bool Window::setupGlad() {
 }
 
 void Window::lockMouse() {
-  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+  //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 void Window::unlockMouse() {
