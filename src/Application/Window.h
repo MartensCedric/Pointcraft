@@ -6,7 +6,7 @@
 class Window {
   static Window *instancePtr;
 
-  const char *name = "glCraft";
+  const char *name = "PointCraft";
   int32_t windowWidth = 1778;
   int32_t windowHeight = 1000;
   GLFWwindow *window = nullptr;

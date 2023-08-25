@@ -6,8 +6,8 @@ This repository is a fork of [glCraft](https://github.com/Isti01/glCraft)
 
 ## Screenshots
 
-- House
-  ![House](./showcase/house.jpg)
+![House](./showcase/house.jpg)
+![House2](./showcase/house2.png)
 
 ## Building the project
 
@@ -29,7 +29,7 @@ This repository is a fork of [glCraft](https://github.com/Isti01/glCraft)
 
     - Build the project *the build_type can be either Release or Debug*
   ```shell
-  cd glCraft
+  cd PointCraft
   mkdir build
   cd build
   cmake -DCMAKE_BUILD_TYPE=<build_type> ..
@@ -38,12 +38,12 @@ This repository is a fork of [glCraft](https://github.com/Isti01/glCraft)
 
     - Run the game on Linux *with an optional save to load*:
   ```shell
-  ./main <saved-world.glc>
+  ./point_craft <saved-world.glc>
   ```
 
     - Or on Windows *with an optional save to load*
   ```batch
-  main.exe <saved-world.glc>
+  point_craft.exe <saved-world.glc>
   ```
 
 ## Features
