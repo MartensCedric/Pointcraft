@@ -14,7 +14,6 @@ endif ()
 
 file(GLOB_RECURSE glCraftSources src/*.cpp)
 add_executable(${PROJECT_NAME} ${glCraftSources})
-message(${glCraftSources})
 target_precompile_headers(${PROJECT_NAME} PRIVATE src/glCraft.h)
 
 # glfw
