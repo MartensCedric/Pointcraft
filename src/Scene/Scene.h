@@ -37,7 +37,7 @@ class Scene {
      std::make_shared<CrosshairEffect>(false),       std::make_shared<ChromaticAberrationEffect>(false),
      std::make_shared<InvertEffect>(false),         std::make_shared<VignetteEffect>(false),
      std::make_shared<GammaCorrectionEffect>(true), std::make_shared<GaussianBlurEffect>(false),
-     std::make_shared<FloydSteinbergEffect>(false), std::make_shared<GrayscaleEffect>(false)
+     std::make_shared<FloydSteinbergEffect>(true), std::make_shared<GrayscaleEffect>(false)
   };
 
   bool isMenuOpen = false;

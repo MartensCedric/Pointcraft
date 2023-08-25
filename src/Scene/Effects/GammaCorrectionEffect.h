@@ -3,7 +3,7 @@
 #include "PostProcessEffect.h"
 
 class GammaCorrectionEffect : public PostProcessEffect {
-  float power = 0.85;
+  float power = 0.594;
 
 public:
   GammaCorrectionEffect(bool enabled)
@@ -15,7 +15,7 @@ public:
     ImGui::Checkbox("Enable gamma correction", &enabled);
 
     if (enabled) {
-      ImGui::SliderFloat("Gamma correction power", &power, 0.5f, 3.0f);
+      ImGui::SliderFloat("Gamma correction power", &power, 0.01f, 3.0f);
     }
   }
 };

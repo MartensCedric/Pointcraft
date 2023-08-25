@@ -14,7 +14,7 @@ class FloydSteinbergEffect : public PostProcessEffect {
   std::vector<uint8_t> pixels;
   std::vector<int32_t> grayscale_pixels;
   std::vector<uint8_t> down_sampler;
-  float diffusion_multiplier = 1.0f;
+  float diffusion_multiplier = 0.741f;
 
 public:
   FloydSteinbergEffect(bool enabled)
