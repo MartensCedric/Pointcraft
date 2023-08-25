@@ -35,7 +35,7 @@ void Scene::updateMouse() {
     player.resetMousePosition();
     Window::instance().unlockMouse();
   } else {
-   // Window::instance().lockMouse();
+   Window::instance().lockMouse();
   }
 }
 

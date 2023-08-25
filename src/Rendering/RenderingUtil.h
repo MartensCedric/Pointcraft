@@ -34,6 +34,8 @@ void grayscale_to_rgba(std::vector<gray_t>& grayscale, std::vector<uint8_t>& rgb
   }
 }
 
+void down_sample(const std::vector<uint8_t>& input, std::vector<uint8_t>& output, int width, int height, int sample_width, int sample_height);
+void up_sample(const std::vector<uint8_t>& input, std::vector<uint8_t>& output, int width, int height, int sample_width, int sample_height);
 int get_index(int x, int y, int width);
 
 #endif  //POINT_CRAFT_RENDERINGUTIL_H
