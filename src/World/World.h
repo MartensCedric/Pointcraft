@@ -25,7 +25,7 @@ class World {
 
   const uint32_t MaxRebuildsAllowedPerFrame = 10;
 
-  int32_t viewDistance = 10;
+  int32_t viewDistance = 2;
   float textureAnimation = 0;
   static constexpr float TextureAnimationSpeed = 2;
 

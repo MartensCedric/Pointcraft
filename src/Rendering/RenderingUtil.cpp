@@ -83,6 +83,8 @@ void up_sample(const std::vector<uint8_t>& input, std::vector<uint8_t>& output, 
   }
 }
 
+
+
 int get_index(int x, int y, int width)
 {
   return y*width + x;

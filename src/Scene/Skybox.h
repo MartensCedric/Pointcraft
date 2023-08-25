@@ -25,7 +25,7 @@ class Skybox {
   Ref<const ShaderProgram> shader;
 
   float rotation = 0;
-  float rotationSpeed = 0.01;
+  float rotationSpeed = 0.00;
 
 public:
   Skybox();

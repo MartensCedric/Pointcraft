@@ -40,8 +40,8 @@ public:
     int32_t width = window.getWindowWidth();
     int32_t height = window.getWindowHeight();
 
-    int samples_width = 10;
-    int samples_height = 10;
+    int samples_width = 5;
+    int samples_height = 5;
 
     if(pixels.size() != width * height * 4)
     {
@@ -66,6 +66,8 @@ public:
     down_sample(pixels, down_sampler, width, height, samples_width, samples_height);
 //    //pixels_to_ppm(pixels, width, height, "buffer.ppm");
     rgba_to_grayscale(down_sampler, grayscale_pixels);
+    lerp_pixels(grayscale_pixels);
+
     int down_sampled_width = width / samples_width;
     int down_sampled_height = height / samples_height;
 

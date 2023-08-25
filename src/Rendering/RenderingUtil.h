@@ -36,6 +36,20 @@ void grayscale_to_rgba(std::vector<gray_t>& grayscale, std::vector<uint8_t>& rgb
 
 void down_sample(const std::vector<uint8_t>& input, std::vector<uint8_t>& output, int width, int height, int sample_width, int sample_height);
 void up_sample(const std::vector<uint8_t>& input, std::vector<uint8_t>& output, int width, int height, int sample_width, int sample_height);
+template<typename T>
+void lerp_pixels(std::vector<T>& output)
+{
+  T min = *std::min_element(output.begin(), output.end());
+  T max = *std::max_element(output.begin(), output.end());
+  T diff = max - min;
+
+  for(int i = 0; i < output.size(); i++)
+  {
+      T current = output[i];
+      T new_value = static_cast<T>((static_cast<float>(current - min) / static_cast<float>(diff)) * 255.f);
+      output[i] = new_value;
+  }
+}
 int get_index(int x, int y, int width);
 
 #endif  //POINT_CRAFT_RENDERINGUTIL_H
