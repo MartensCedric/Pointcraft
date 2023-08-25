@@ -34,8 +34,8 @@ class Scene {
   float deltaTime = 1.0f;
   BlockOutline outline;
   std::vector<Ref<PostProcessEffect>> postProcessingEffects = {
-     std::make_shared<CrosshairEffect>(true),       std::make_shared<ChromaticAberrationEffect>(false),
-     std::make_shared<InvertEffect>(false),         std::make_shared<VignetteEffect>(true),
+     std::make_shared<CrosshairEffect>(false),       std::make_shared<ChromaticAberrationEffect>(false),
+     std::make_shared<InvertEffect>(false),         std::make_shared<VignetteEffect>(false),
      std::make_shared<GammaCorrectionEffect>(true), std::make_shared<GaussianBlurEffect>(false),
      std::make_shared<FloydSteinbergEffect>(false), std::make_shared<GrayscaleEffect>(false)
   };
