@@ -29,3 +29,8 @@ void pixels_to_ppm(const std::vector<uint8_t>& data, int width, int height, cons
 
   ppm_file.close();
 }
+
+int get_index(int x, int y, int width)
+{
+  return y*width + x;
+}

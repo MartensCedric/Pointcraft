@@ -23,4 +23,17 @@ void rgba_to_grayscale(const std::vector<uint8_t>& rgba, std::vector<gray_t>& gr
   }
 }
 
+template<typename gray_t>
+void grayscale_to_rgba(std::vector<gray_t>& grayscale, std::vector<uint8_t>& rgba)
+{
+  for(int i = 0; i < grayscale.size(); i++) {
+      rgba[i * 4] = grayscale[i];
+      rgba[i * 4 + 1] = grayscale[i];
+      rgba[i * 4 + 2] = grayscale[i];
+      rgba[i * 4 + 3] = 255;
+  }
+}
+
+int get_index(int x, int y, int width);
+
 #endif  //POINT_CRAFT_RENDERINGUTIL_H
