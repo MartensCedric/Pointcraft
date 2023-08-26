@@ -49,7 +49,7 @@ This repository is a fork of [glCraft](https://github.com/Isti01/glCraft)
 ## Features
 
 - Rendering
-  - An implemtnation of the Floyd-Steinberg Dithering algorithm was used [See Wikipedia](https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering).
+  - An implementation of the Floyd-Steinberg Dithering algorithm was used [See Wikipedia](https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering).
   - The implementation is unfortunately on the CPU since the algorithm cannot be run in parallel due to the sequential requirements.
   - A parameter called `diffusion_multiplier` is available to multiply the Floyd-Steinberg fractions.
 
