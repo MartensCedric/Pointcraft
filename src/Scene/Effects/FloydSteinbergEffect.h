@@ -62,16 +62,16 @@ public:
 
 
     down_sample(pixels, down_sampler, width, height, samples_width, samples_height);
-//    //pixels_to_ppm(pixels, width, height, "buffer.ppm");
+
     rgba_to_grayscale(down_sampler, grayscale_pixels);
     lerp_pixels(grayscale_pixels);
 
     int down_sampled_width = width / samples_width;
     int down_sampled_height = height / samples_height;
 
-    for(int x = 0; x < down_sampled_width; x++)
+    for(int y = 0; y < down_sampled_height; y++)
     {
-      for(int y = 0; y < down_sampled_height; y++)
+      for(int x = 0; x < down_sampled_width; x++)
       {
          int index = get_index(x, y, down_sampled_width);
          int32_t old_pixel = grayscale_pixels[index];
