@@ -50,3 +50,6 @@ fabric.properties
 out
 gen
 build/
+media/
+.pyc
+__pycache__/
