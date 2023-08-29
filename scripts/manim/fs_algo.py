@@ -48,17 +48,28 @@ class FloydSteinbergAlgorithm(Scene):
 
         self.wait(1)
 
-        # black_square = Square(fill_color=BLACK, fill_opacity=1, stroke_color=GRAY)
-        # self.play(Create(black_square))
-
-        # white_square = Square(fill_color=WHITE, fill_opacity=1, stroke_color=GRAY)
-        # self.play(Create(white_square))
         text_v_group, text_elements = create_text_grid(image_data, size=(6,6), offset=(-2,0), font_size=36)
         self.play(FadeIn(text_v_group))
+
+        black_square = Square(fill_color=BLACK, fill_opacity=1, stroke_color=GRAY)
+        black_square.shift(4*RIGHT + 2*UP)
+        black_square_val = Text(str(0), color=WALTZ_WHITE)
+        black_square_val.move_to(black_square)
+        self.play(Create(black_square), Create(black_square_val))
+
+        white_square = Square(fill_color=WHITE, fill_opacity=1, stroke_color=GRAY)
+        white_square.shift(4*RIGHT - 2*UP)
+        white_square_val = Text(str(255), color=WALTZ_BLACK)
+        white_square_val.move_to(white_square)
+        self.play(Create(white_square), Create(white_square_val))
+
+        self.wait(3)
+        self.play(FadeOut(black_square), FadeOut(white_square), FadeOut(white_square_val), FadeOut(black_square_val))
         first_focus_square = Square(side_length=1, color=WALTZ_YELLOW)
 
-        # first_focus_square.shift(-2.5 * RIGHT + -2.5 * DOWN)
-        # self.play(Create(first_focus_square))
+        first_focus_square.shift(-4.5 * RIGHT + -2.5 * DOWN)
+        self.play(Create(first_focus_square))
+        self.play(FadeOut(first_focus_square))
 
         image_data[0][0] = 0
         update_text_element(text_elements, coord=(0,0), size=(6,6), new_val=0)
@@ -69,21 +80,29 @@ class FloydSteinbergAlgorithm(Scene):
         img.shift(-2 * RIGHT)
         self.add(img)
         self.wait(1)
+        error_text = Text(f"Error = {92} - {0} = 92")
+        error_text.shift(4* RIGHT)
+        self.play(Create(error_text))
+        self.wait(5)
         table = Table(
             [["", "*", "7/16"],
             ["3/16","5/16", "1/16"]], include_outer_lines=True)
         table.shift(4 * RIGHT + 2 * UP)
         table.scale(0.5)
 
+        fs_table_title = Text("Table for Floyd-Steinberg Dithering", font_size=24)
+        fs_table_title.next_to(table, UP)
+
         self.play(Create(table))
-        error_text = Text(f"Error = {92} - {0} = 92")
-        error_text.shift(4* RIGHT)
-        self.play(Create(error_text))
+        self.play(Create(fs_table_title))
+        self.wait(5)
         error_table = get_error_table(92)
         error_table.shift(4 * RIGHT - 2 * UP)
         error_table.scale(0.5)
         self.play(Create(error_table))
+
         # fs_weights_v_group, _ = create_text_grid(fs_weight, size=(2,3), offset=(3, -2), font_size=24)
         # self.play(FadeIn(fs_weights_v_group))
-        self.wait(2)
+        self.wait(5)
+        self.wait(5)
 
