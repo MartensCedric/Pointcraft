@@ -1,11 +1,9 @@
 # Adapted from: https://gist.github.com/bzamecnik/33e10b13aae34358c16d1b6c69e89b01
 # https://en.wikipedia.org/wiki/Floyd–Steinberg_dithering
-from numba import jit
 import numpy as np
 from PIL import Image
 
-@jit(nopython=True)
-def floyd_steinberg(image):
+def floyd_steinberg(image, weight=1):
     # image: np.array of shape (height, width), dtype=float, 0.0-1.0
     # works in-place!
     h, w = image.shape
@@ -17,22 +15,33 @@ def floyd_steinberg(image):
             error = old - new
             # precomputing the constants helps
             if x + 1 < w:
-                image[y, x + 1] += error * 0.4375 # right, 7 / 16
+                image[y, x + 1] += error * 0.4375 * weight # right, 7 / 16
             if (y + 1 < h) and (x + 1 < w):
-                image[y + 1, x + 1] += error * 0.0625 # right, down, 1 / 16
+                image[y + 1, x + 1] += error * 0.0625 * weight# right, down, 1 / 16
             if y + 1 < h:
-                image[y + 1, x] += error * 0.3125 # down, 5 / 16
-            if (x - 1 >= 0) and (y + 1 < h): 
-                image[y + 1, x - 1] += error * 0.1875 # left, down, 3 / 16
+                image[y + 1, x] += error * 0.3125 * weight# down, 5 / 16
+            if (x - 1 >= 0) and (y + 1 < h):
+                image[y + 1, x - 1] += error * 0.1875 * weight# left, down, 3 / 16
     return image
 
 def color_gradient(w, h):
     color_gradient = []
     for row in range(h):
-        interp = np.interp(row, [0, h], [0, 1])
-        color_gradient.append([interp] * w)
+        x = list(range(w))
+        interp = np.interp(x, [0, w-1], [0, 1])
+        color_gradient.append(interp)
     return np.array(color_gradient)
 
+def bad_color_gradient(w, h):
+    color_gradient = []
+    for row in range(h):
+        x = list(range(w))
+        interp = np.interp(x, [0, w-1], [0.2, 0.8])
+        color_gradient.append(interp)
+    return np.array(color_gradient)
+
+def gamma_correction(arr, gamma):
+    return arr**(1/gamma)
 
 def pil_to_np(pilimage):
     return np.array(pilimage) / 255
@@ -41,9 +50,22 @@ def np_to_pil(image):
     return Image.fromarray((image * 255).astype('uint8'))
 
 
-img_array = color_gradient(1600, 900)
-out = floyd_steinberg(img_array)
+good_gradient = color_gradient(225, 50)
+Image.fromarray(np.uint8(good_gradient * 255)).save("good_gradient.png")
 
-image_pil = Image.fromarray(np.uint8(out * 255))
-image_pil.save("output.png")
+bad_gradient = bad_color_gradient(225, 50)
+Image.fromarray(np.uint8(bad_gradient * 255)).save("bad_gradient.png")
 
+gamma_corrected = gamma_correction(good_gradient.copy(), 0.594)
+Image.fromarray(np.uint8(gamma_corrected * 255)).save("gamma_correction.png")
+
+fs_bad_gradient = floyd_steinberg(bad_gradient)
+Image.fromarray(np.uint8(fs_bad_gradient * 255)).save("fs_bad_gradient.png")
+fs_good_gradient = floyd_steinberg(good_gradient.copy())
+Image.fromarray(np.uint8(fs_good_gradient * 255)).save("fs_good_gradient.png")
+
+fs_gamma_corrected = floyd_steinberg(gamma_corrected.copy())
+Image.fromarray(np.uint8(fs_gamma_corrected * 255)).save("good_gamma.png")
+
+fs_gamma_corrected_and_weighted = floyd_steinberg(gamma_corrected.copy(), 0.741)
+Image.fromarray(np.uint8(fs_gamma_corrected_and_weighted * 255)).save("good_gamma_weighted.png")
