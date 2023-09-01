@@ -15,6 +15,8 @@
 #include "Effects/GammaCorrectionEffect.h"
 #include "Effects/GaussianBlurEffect.h"
 #include "Effects/Bayer2by2.h"
+#include "Effects/Bayer4by4.h"
+#include "Effects/Bayer8by8.h"
 #include "Effects/GrayscaleEffect.h"
 #include "Effects/InvertEffect.h"
 #include "Effects/PostProcessEffect.h"
@@ -39,7 +41,7 @@ class Scene {
      std::make_shared<InvertEffect>(false),         std::make_shared<VignetteEffect>(false),
      std::make_shared<GammaCorrectionEffect>(true), std::make_shared<GaussianBlurEffect>(false),
      std::make_shared<FloydSteinbergEffect>(false), std::make_shared<GrayscaleEffect>(false),
-     std::make_shared<Bayer2by2>(true)
+     std::make_shared<Bayer2by2>(false), std::make_shared<Bayer4by4>(false), std::make_shared<Bayer8by8>(true),
   };
 
   bool isMenuOpen = false;
