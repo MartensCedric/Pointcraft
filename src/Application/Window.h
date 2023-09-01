@@ -7,8 +7,8 @@ class Window {
   static Window *instancePtr;
 
   const char *name = "PointCraft";
-  int32_t windowWidth = 1778;
-  int32_t windowHeight = 1000;
+  int32_t windowWidth = 1600;
+  int32_t windowHeight = 900;
   GLFWwindow *window = nullptr;
   glm::vec4 clearColor = {0, 0, 0, 1};
   Ref<FramebufferStack> framebufferStack = std::make_shared<FramebufferStack>();
