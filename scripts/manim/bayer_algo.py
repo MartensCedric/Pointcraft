@@ -66,6 +66,16 @@ def get_circle(radius=0.6):
     return Circle(radius=0.6, stroke_color=WALTZ_YELLOW)
 
 
+def create_lines(n):
+    lines = []
+    for i in range(n):
+        l = Line(start=[-6 + i * 2, 4, 0], end=[-6 + i * 2,  -4, 0], color=WALTZ_BLUE)
+        lines.append(l)
+    for i in range(n):
+        l = Line(start=[-6, 4 - i * 2, 0], end=[2, 4 - i * 2, 0], color=WALTZ_BLUE)
+        lines.append(l)
+    return lines
+
 class BayerAlgorithm(Scene):
     def construct(self):
         Text.set_default(font="Fira Sans")
@@ -96,8 +106,19 @@ class BayerAlgorithm(Scene):
 
         self.wait(3)
         self.play(FadeOut(black_square), FadeOut(white_square), FadeOut(white_square_val), FadeOut(black_square_val))
+        bayer2_2_table = Table([["0", "127"], ["191", "63"]], include_outer_lines=True)
+        bayer2_2_table.scale(0.75)
+        bayer2_2_table.shift(4.5 * RIGHT + 2 * UP)
+        self.play(Create(bayer2_2_table))
 
-        # Add blue rectangles for every 2 x 2 or have 5 lines split in horizontal and v
+        lines = create_lines(5)
+        for l in lines:
+            self.play(Create(l))
+
+        focus_square = Square(side_length=2, color=WALTZ_YELLOW)
+        focus_square.next_to(-6.25 * RIGHT + 3 * UP)
+        self.play(Create(focus_square))
+        self.play(Uncreate(focus_square))
 
         self.play(FadeOut(img))
 
