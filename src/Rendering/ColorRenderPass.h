@@ -6,6 +6,8 @@
 class ColorRenderPass {
   Ref<const ShaderProgram> shader;
 
+  static float val;
+
 public:
   explicit ColorRenderPass(const Ref<const ShaderProgram>& shader);
 

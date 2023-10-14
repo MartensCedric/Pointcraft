@@ -3,6 +3,8 @@
 #include "../AssetManager/AssetManager.h"
 #include "../Performance/Trace.h"
 
+float ColorRenderPass::val = 0.0f;
+
 ColorRenderPass::ColorRenderPass(const Ref<const ShaderProgram>& shader) : shader(shader) {
   assert(shader != nullptr);
 }
@@ -13,6 +15,8 @@ void ColorRenderPass::setTexture(const std::string& attachmentName, const Ref<Te
 
 void ColorRenderPass::render() {
   TRACE_FUNCTION();
+  shader->setFloat("u_hue", val);
+  val++;
   shader->bind();
   glDisable(GL_DEPTH_TEST);
   FullscreenQuad::getVertexArray()->renderIndexed();

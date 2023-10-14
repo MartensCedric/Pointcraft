@@ -109,7 +109,17 @@ public:
       }
     }
     grayscale_to_rgba(grayscale_pixels, down_sampler);
+    std::vector<uint8_t> rgba_pixels(pixels.begin(), pixels.end());
     up_sample(down_sampler, pixels, width, height, samples_width, samples_height);
+    for(int i = 0; i < width * height; i++)
+    {
+        if(pixels[i*4] > 0)
+           {
+              pixels[i*4] = rgba_pixels[i*4];
+              pixels[i*4+1] = rgba_pixels[i*4+1];
+              pixels[i*4+2] = rgba_pixels[i*4+2];
+           }
+      }
 
     colorSource->getColorAttachment(0)->bind();
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels.data());
