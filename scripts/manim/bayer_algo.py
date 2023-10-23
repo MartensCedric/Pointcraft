@@ -54,16 +54,16 @@ def get_error_table(value):
     return error_table
 
 
-def highlight(scene, location, wait=0):
-    hl_square = get_circle()
+def highlight(scene, location, wait=0, c=WALTZ_YELLOW):
+    hl_square = get_circle(radius=0.6, c=c)
     hl_square.next_to(location)
     scene.play(Create(hl_square))
     scene.wait(wait)
     scene.play(Uncreate(hl_square))
 
 
-def get_circle(radius=0.6):
-    return Circle(radius=0.6, stroke_color=WALTZ_YELLOW)
+def get_circle(radius=0.6, c=WALTZ_YELLOW):
+    return Circle(radius=0.6, stroke_color=c)
 
 
 def create_lines(n):
@@ -124,7 +124,10 @@ class BayerAlgorithm(Scene):
         first_comp = Text("92 > 0", color=WALTZ_WHITE)
         first_comp.shift(4.5 * RIGHT - UP)
         self.play(FadeIn(first_comp))
-        self.wait(4)
+        self.wait(2)
+        highlight(self, bayer2_2_table.get_center() + 0.5* UP + 1.70* LEFT, wait=1, c=WALTZ_GREEN)
+        highlight(self, focus_square.get_center() + 0.5* UP + 1.35* LEFT, wait=1, c=WALTZ_GREEN)
+        self.wait(2)
         self.remove(img)
         image_data[0,0] = 255
         update_text_element(text_elements, coord=(0, 0), size=(8, 8), new_val=image_data[0][0])
@@ -133,7 +136,7 @@ class BayerAlgorithm(Scene):
         self.add(img)
 
         self.wait(2)
-        second_comp = Text("92 ≯ 127", color=WALTZ_WHITE)
+        second_comp = Text("98 ≯ 127", color=WALTZ_WHITE)
         second_comp.next_to(first_comp, DOWN)
         self.play(FadeIn(second_comp))
         self.wait(2)
@@ -170,5 +173,39 @@ class BayerAlgorithm(Scene):
         self.wait(2)
 
         self.play(Uncreate(focus_square))
-        # self.play(FadeOut(img))
+        self.play(FadeOut(first_comp, second_comp, third_comp, fourth_comp))
 
+        arrow = Arrow(np.array([-1, 3, 0]), np.array([-1, -3, 0]), buff=0, stroke_width=60)
+        arrow.scale(1)
+        arrow.set_color(WALTZ_RED)
+
+        self.play(Create(arrow))
+        self.wait(2)
+        self.play(Uncreate(arrow))
+
+        for i in range(1, 16):
+            self.remove(img)
+            block_row = i // 4
+            block_col = i % 4
+            r = block_row * 2
+            c = block_col * 2
+            image_data[r, c] = 255 if image_data[r, c] > 0 else 0
+            image_data[r+1, c] = 255 if image_data[r+1, c] > 127 else 0
+            image_data[r, c+1] = 255 if image_data[r, c+1] > 191 else 0
+            image_data[r+1, c+1] = 255 if image_data[r+1, c+1] > 63 else 0
+            img = get_image_mobject(image_data)
+            img.shift(-2 * RIGHT)
+            self.add(img)
+            update_text_element(text_elements, coord=(r, c), size=(8, 8), new_val=image_data[r, c])
+            update_text_element(text_elements, coord=(r+1, c), size=(8, 8), new_val=image_data[r+1,c])
+            update_text_element(text_elements, coord=(r, c+1), size=(8, 8), new_val=image_data[r,c+1])
+            update_text_element(text_elements, coord=(r+1, c+1), size=(8, 8), new_val=image_data[r+1, c+1])
+            self.wait(3 / i)
+
+        self.wait(5)
+
+
+if __name__ == '__main__':
+    with tempconfig({"quality": "medium_quality", "disable_caching": True}):
+        scene = BayerAlgorithm()
+        scene.render()
