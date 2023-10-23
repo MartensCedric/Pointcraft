@@ -9,14 +9,15 @@
 #include "../World/World.h"
 #include "../glCraft.h"
 #include "BlockOutline.h"
+#include "Effects/Bayer2by2.h"
+#include "Effects/Bayer4by4.h"
+#include "Effects/Bayer8by8.h"
+#include "Effects/Bayer8by8Clustered.h"
 #include "Effects/ChromaticAberrationEffect.h"
 #include "Effects/CrosshairEffect.h"
 #include "Effects/FloydSteinbergEffect.h"
 #include "Effects/GammaCorrectionEffect.h"
 #include "Effects/GaussianBlurEffect.h"
-#include "Effects/Bayer2by2.h"
-#include "Effects/Bayer4by4.h"
-#include "Effects/Bayer8by8.h"
 #include "Effects/GrayscaleEffect.h"
 #include "Effects/InvertEffect.h"
 #include "Effects/PostProcessEffect.h"
@@ -42,6 +43,7 @@ class Scene {
      std::make_shared<GammaCorrectionEffect>(true), std::make_shared<GaussianBlurEffect>(false),
      std::make_shared<FloydSteinbergEffect>(false), std::make_shared<GrayscaleEffect>(false),
      std::make_shared<Bayer2by2>(false), std::make_shared<Bayer4by4>(false), std::make_shared<Bayer8by8>(true),
+     std::make_shared<Bayer8by8Clustered>(false)
   };
 
   bool isMenuOpen = false;
