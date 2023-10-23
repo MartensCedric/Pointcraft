@@ -175,13 +175,13 @@ class BayerAlgorithm(Scene):
         self.play(Uncreate(focus_square))
         self.play(FadeOut(first_comp, second_comp, third_comp, fourth_comp))
 
-        arrow = Arrow(np.array([-1, 3, 0]), np.array([-1, -3, 0]), buff=0, stroke_width=60)
+        arrow = Arrow(np.array([-2, 3, 0]), np.array([-2, -3, 0]), buff=0, stroke_width=80, tip_length=80 * 0.05)
         arrow.scale(1)
         arrow.set_color(WALTZ_RED)
 
         self.play(Create(arrow))
         self.wait(2)
-        self.play(Uncreate(arrow))
+        self.play(FadeOut(arrow))
 
         for i in range(1, 16):
             self.remove(img)
