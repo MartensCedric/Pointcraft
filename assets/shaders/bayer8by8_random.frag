@@ -9,15 +9,16 @@ uniform float screen_height;
 layout(location = 0) out vec4 color;
 
 int dither[8][8] = {
-    { 24, 10, 12, 26, 35, 47, 49, 37 },
-    { 8, 0, 2, 14, 45, 59, 61, 51 },
-    { 22, 6, 4, 16, 43, 57, 63, 53 },
-    { 30, 20, 18, 28, 33, 41, 55, 39 },
-    { 34, 46, 48, 36, 25, 11, 13, 27 },
-    { 44, 58, 60, 50, 9, 1, 3, 15 },
-    { 42, 56, 62, 52, 23, 7, 5, 17 },
-    { 32, 40, 54, 38, 31, 21, 19, 29 }
+{ 22, 41, 2, 47, 20, 54, 49, 15 },
+{ 28, 63, 17, 39, 60, 51, 7, 29 },
+{ 52, 9, 36, 19, 6, 53, 33, 8 },
+{ 58, 16, 27, 11, 42, 61, 38, 46 },
+{ 25, 45, 3, 57, 31, 24, 12, 55 },
+{ 59, 30, 4, 0, 35, 18, 50, 14 },
+{ 44, 23, 32, 34, 56, 13, 21, 43 },
+{ 37, 26, 5, 10, 40, 1, 62, 48 }
 };
+
 
 float rgb_to_grayscale(vec3 rgb_val)
 {
@@ -26,7 +27,7 @@ float rgb_to_grayscale(vec3 rgb_val)
 
 void main() {
     vec2 screen = vec2(screen_width, screen_height);
-    float down_sample = 2.0;
+    float down_sample = 5.0;
     vec2 desired_res = screen / down_sample;
     vec2 normalized_coord = floor((gl_FragCoord.xy / screen) * desired_res) / desired_res;
     vec2 centered_coord = normalized_coord + vec2(0.5, 0.5) / desired_res;
