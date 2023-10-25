@@ -110,16 +110,22 @@ class BayerAlgorithm(Scene):
         bayer2_2_table.scale(0.75)
         bayer2_2_table.shift(4.5 * RIGHT + 2 * UP)
         self.play(Create(bayer2_2_table))
+        self.wait(1)
+        self.play(Indicate(bayer2_2_table))
+        self.wait(5)
 
         lines = create_lines(5)
         for l in lines:
-            self.play(Create(l, run_time=0.4))
+            self.play(Create(l, run_time=0.2))
 
         focus_square = Square(side_length=2, color=WALTZ_YELLOW)
         focus_square.next_to(-6.25 * RIGHT + 3 * UP)
+        self.wait(2)
         self.play(Create(focus_square))
+        self.play(Circumscribe(focus_square))
 
-        self.play(Wiggle(bayer2_2_table))
+        self.wait(4)
+        self.play(Indicate(bayer2_2_table))
 
         first_comp = Text("92 > 0", color=WALTZ_WHITE)
         first_comp.shift(4.5 * RIGHT - UP)
@@ -135,30 +141,30 @@ class BayerAlgorithm(Scene):
         img.shift(-2 * RIGHT)
         self.add(img)
 
-        self.wait(2)
+        self.wait(4)
         second_comp = Text("98 ≯ 127", color=WALTZ_WHITE)
         second_comp.next_to(first_comp, DOWN)
         self.play(FadeIn(second_comp))
-        self.wait(2)
+        self.wait(4)
         self.remove(img)
         image_data[0,1] = 0
         update_text_element(text_elements, coord=(0, 1), size=(8, 8), new_val=image_data[0][1])
         img = get_image_mobject(image_data)
         img.shift(-2 * RIGHT)
         self.add(img)
-        self.wait(2)
+        self.wait(3)
 
         third_comp = Text("85 ≯ 191", color=WALTZ_WHITE)
         third_comp.next_to(second_comp, DOWN)
         self.play(FadeIn(third_comp))
-        self.wait(2)
+        self.wait(3)
         self.remove(img)
         image_data[1,0] = 0
         update_text_element(text_elements, coord=(1, 0), size=(8, 8), new_val=image_data[1][0])
         img = get_image_mobject(image_data)
         img.shift(-2 * RIGHT)
         self.add(img)
-        self.wait(2)
+        self.wait(3)
 
 
         fourth_comp = Text("82 > 63", color=WALTZ_WHITE)
@@ -170,7 +176,7 @@ class BayerAlgorithm(Scene):
         img = get_image_mobject(image_data)
         img.shift(-2 * RIGHT)
         self.add(img)
-        self.wait(2)
+        self.wait(3)
 
         self.play(Uncreate(focus_square))
         self.play(FadeOut(first_comp, second_comp, third_comp, fourth_comp))
@@ -180,7 +186,7 @@ class BayerAlgorithm(Scene):
         arrow.set_color(WALTZ_RED)
 
         self.play(Create(arrow))
-        self.wait(2)
+        self.wait(4)
         self.play(FadeOut(arrow))
 
         for i in range(1, 16):
