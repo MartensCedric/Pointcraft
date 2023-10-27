@@ -212,6 +212,6 @@ class BayerAlgorithm(Scene):
 
 
 if __name__ == '__main__':
-    with tempconfig({"quality": "medium_quality", "disable_caching": True}):
+    with tempconfig({"quality": "high_quality", "disable_caching": True}):
         scene = BayerAlgorithm()
         scene.render()

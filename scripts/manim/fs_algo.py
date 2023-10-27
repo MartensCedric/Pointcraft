@@ -292,3 +292,8 @@ class FloydSteinbergAlgorithm(Scene):
 
 
         self.wait(6)
+
+if __name__ == '__main__':
+    with tempconfig({"quality": "high_quality", "disable_caching": True}):
+        scene = FloydSteinbergAlgorithm()
+        scene.render()
