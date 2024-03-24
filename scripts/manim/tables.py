@@ -39,6 +39,13 @@ class TablesScene(Scene):
         self.play(Circumscribe(bayer8_8_table))
         self.wait(2)
         self.play(FadeOut(bayer8_8_table))
+        self.wait(2)
+        bayer2_2_percent_table = Table([["0 (0%)", "127 (50%)"], ["191 (75%)", "63 (25%)"]], include_outer_lines=True)
+        self.play(FadeIn(bayer2_2_percent_table))
+        self.wait(1)
+        self.play(Circumscribe(bayer2_2_percent_table))
+        self.wait(2)
+        self.play(FadeOut(bayer2_2_percent_table))
 
 if __name__ == '__main__':
     with tempconfig({"quality": "high_quality", "disable_caching": True}):

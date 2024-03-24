@@ -2,6 +2,7 @@
 # https://en.wikipedia.org/wiki/Floyd–Steinberg_dithering
 import numpy as np
 from PIL import Image
+import sys
 
 def floyd_steinberg(image, weight=1):
     # image: np.array of shape (height, width), dtype=float, 0.0-1.0
@@ -23,6 +24,23 @@ def floyd_steinberg(image, weight=1):
             if (x - 1 >= 0) and (y + 1 < h):
                 image[y + 1, x - 1] += error * 0.1875 * weight# left, down, 3 / 16
     return image
+bayer_matrix = np.array([
+    [0, 2],
+    [3, 1]
+])
+
+def bayer(image):
+    h, w = image.shape
+    bayer_tiled = np.tile(bayer_matrix, (h // 2, w // 2))  # Tile the Bayer matrix
+
+    print(bayer_tiled)
+    for y in range(h):
+        for x in range(w):
+            old = image[y, x]
+            new = 1 if bayer_tiled[y, x] < np.round(old * 4.0) else 0
+            image[y, x] = new
+    return image
+
 
 def color_gradient(w, h):
     color_gradient = []
@@ -49,7 +67,6 @@ def pil_to_np(pilimage):
 def np_to_pil(image):
     return Image.fromarray((image * 255).astype('uint8'))
 
-
 good_gradient = color_gradient(225, 50)
 Image.fromarray(np.uint8(good_gradient * 255)).save("good_gradient.png")
 
@@ -69,3 +86,20 @@ Image.fromarray(np.uint8(fs_gamma_corrected * 255)).save("good_gamma.png")
 
 fs_gamma_corrected_and_weighted = floyd_steinberg(gamma_corrected.copy(), 0.741)
 Image.fromarray(np.uint8(fs_gamma_corrected_and_weighted * 255)).save("good_gamma_weighted.png")
+
+normal_gradient = color_gradient(256, 48)
+bayer_done = bayer(normal_gradient)
+np_to_pil(bayer_done).save('bayer_gradient.png')
+
+if len(sys.argv) > 1:
+    filename  = sys.argv[1]
+    img = Image.open(filename).convert("L")
+    img = img.resize((240, 135), Image.NEAREST)
+    img = pil_to_np(img.copy())
+    img = gamma_correction(img.copy(), 0.594)
+    img = floyd_steinberg(img.copy(), 0.7)
+    # img = img.resize((1920, 1080), Image.NEAREST)
+    img = np_to_pil(img.copy())
+    img.save("output.png")
+
+
